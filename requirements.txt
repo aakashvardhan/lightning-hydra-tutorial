@@ -1,0 +1,13 @@
+black==24.8.0
+lightning[extra]==2.4.0
+rich==13.8.1
+tensorboard==2.18.0
+timm==1.0.9
+torch==2.4.1
+torchvision==0.19.1
+scikit-learn
+matplotlib==3.7.4
+pandas==2.0.0
+numpy
+scipy
+pillow==10.0.0
