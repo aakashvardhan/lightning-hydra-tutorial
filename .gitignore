@@ -1,2 +1,4 @@
 kaggle_credential.txt
 *.pyc
+data/
+logs/
