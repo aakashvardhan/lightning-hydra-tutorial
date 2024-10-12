@@ -181,4 +181,4 @@ Evaluation results:
 
 Sample predictions:
 
-![Sample Predictions](./predictions/sample_predictions.png)
+![Sample Predictions](https://github.com/aakashvardhan/lightning-hydra-tutorial/blob/main/predictions/test_predictions.png)
