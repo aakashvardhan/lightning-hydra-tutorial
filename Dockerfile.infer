@@ -1,0 +1,30 @@
+# Use Python 3.11
+FROM python:3.11-slim
+
+# Set the working directory
+WORKDIR /opt/mount/
+
+# Copy only the requirements file first to leverage Docker cache
+COPY requirements.txt .
+
+# Install setuptools first, then other dependencies
+RUN pip install --no-cache-dir setuptools && \
+    pip install --no-cache-dir -r requirements.txt
+
+# Install additional dependencies for plotting
+RUN pip install --no-cache-dir matplotlib
+
+# Copy only necessary files for evaluation
+COPY . .
+
+# Create Kaggle configuration directory
+RUN mkdir -p /root/.kaggle
+
+# Create Kaggle API token file using environment variables
+RUN echo "{\"username\":\"$KAGGLE_USERNAME\",\"key\":\"$KAGGLE_KEY\"}" > /root/.kaggle/kaggle.json && \
+    chmod 600 /root/.kaggle/kaggle.json
+
+# Expose port 8000
+EXPOSE 8000
+
+# The command will be specified in docker-compose.yaml

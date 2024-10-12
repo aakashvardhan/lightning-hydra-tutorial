@@ -1,0 +1,44 @@
+services:
+  train:
+    build:
+      context: .
+      dockerfile: Dockerfile.train
+    volumes:
+      - .:/opt/mount
+    environment:
+      - KAGGLE_USERNAME
+      - KAGGLE_KEY
+    command: python src/train.py
+
+  infer:
+    build:
+      context: .
+      dockerfile: Dockerfile.infer
+    volumes:
+      - .:/opt/mount
+      - ./predictions:/opt/mount/predictions
+    environment:
+      - KAGGLE_USERNAME
+      - KAGGLE_KEY
+    ports:
+      - "8000:8000"
+    command: >
+      sh -c "python src/infer.py --checkpoint_path /opt/mount/logs/dog_breed_classification/checkpoints/best_model.ckpt
+      --data_dir /opt/mount/data
+      --save_dir /opt/mount/predictions
+      && python -m http.server 8000 --directory /opt/mount/predictions"
+
+  eval:
+    build:
+      context: .
+      dockerfile: Dockerfile.eval
+    volumes:
+      - .:/opt/mount
+    environment:
+      - KAGGLE_USERNAME
+      - KAGGLE_KEY
+    command: python src/eval.py
+
+volumes:
+  data:
+  predictions:

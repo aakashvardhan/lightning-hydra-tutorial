@@ -1,0 +1,25 @@
+# Use Python 3.11
+FROM python:3.11-slim
+
+# Set the working directory
+WORKDIR /opt/mount/
+
+# Copy only the requirements file first to leverage Docker cache
+COPY requirements.txt .
+
+# Install setuptools first, then other dependencies
+RUN pip install --no-cache-dir setuptools && \
+    pip install --no-cache-dir -r requirements.txt
+
+# Copy only necessary files for evaluation
+COPY . .
+
+# Create Kaggle configuration directory
+RUN mkdir -p /root/.kaggle
+
+# Create Kaggle API token file using environment variables
+RUN echo "{\"username\":\"$KAGGLE_USERNAME\",\"key\":\"$KAGGLE_KEY\"}" > /root/.kaggle/kaggle.json && \
+    chmod 600 /root/.kaggle/kaggle.json
+
+# Specify the command to run
+CMD ["python", "src/eval.py"]

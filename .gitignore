@@ -2,3 +2,5 @@ kaggle_credential.txt
 *.pyc
 data/
 logs/
+*.log
+lightning_logs/

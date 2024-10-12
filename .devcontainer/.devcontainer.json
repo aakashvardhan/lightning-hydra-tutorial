@@ -1,0 +1,37 @@
+{
+    "name": "Dog Breed Classifier Dev Container",
+    "dockerComposeFile": "../docker-compose.yaml",
+    "service": "app",
+    "workspaceFolder": "/app",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "ms-python.vscode-pylance",
+                "ms-toolsai.jupyter"
+            ],
+            "settings": {
+                "python.defaultInterpreterPath": "/usr/local/bin/python",
+                "python.linting.enabled": true,
+                "python.linting.pylintEnabled": true,
+                "python.formatting.autopep8Path": "/usr/local/bin/autopep8",
+                "python.formatting.blackPath": "/usr/local/bin/black",
+                "python.formatting.yapfPath": "/usr/local/bin/yapf",
+                "python.linting.banditPath": "/usr/local/bin/bandit",
+                "python.linting.flake8Path": "/usr/local/bin/flake8",
+                "python.linting.mypyPath": "/usr/local/bin/mypy",
+                "python.linting.pycodestylePath": "/usr/local/bin/pycodestyle",
+                "python.linting.pydocstylePath": "/usr/local/bin/pydocstyle"
+            }
+        }
+    },
+    "postCreateCommand": "pip install --user pylint autopep8 black yapf bandit flake8 mypy pycodestyle pydocstyle",
+    "remoteUser": "root",
+    "remoteEnv": {
+        "KAGGLE_USERNAME": "${localEnv:KAGGLE_USERNAME}",
+        "KAGGLE_KEY": "${localEnv:KAGGLE_KEY}"
+    }
+}
+
+// // export KAGGLE_USERNAME=your_username
+// export KAGGLE_KEY=your_key
